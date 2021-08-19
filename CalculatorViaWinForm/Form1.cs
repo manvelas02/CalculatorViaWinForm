@@ -261,7 +261,14 @@ namespace CalculatorViaWinForm
                 {
                     tempStr += this.enterTextBox.Text[i].ToString();
                 }
-                this.enterTextBox.Text = tempStr;
+                if (tempStr == null)
+                {
+                    this.enterTextBox.Text = "0";
+                }
+                else
+                {
+                    this.enterTextBox.Text = tempStr;
+                }
             }
             else if (senderText == removeBtn.Text && !isChangedText && this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
             {
