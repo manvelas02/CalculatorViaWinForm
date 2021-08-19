@@ -235,20 +235,24 @@ namespace CalculatorViaWinForm
         public void Clear(object sender,EventArgs e)
         {
             string senderText = ((Button)sender).Text;
-            if (senderText == clearAllBtn.Text || 
-               (senderText == clearEntryBtn.Text && 
-               this.finalLabel.Text[this.finalLabel.Text.Length-2].ToString() 
-               == equalBtn.Text ))
+
+            if (!String.IsNullOrWhiteSpace(this.finalLabel.Text))
             {
-                fNum = 0;
-                sNum = 1;
-                this.finalLabel.Text = "";
-                this.enterTextBox.Text = "";
+                if (senderText == clearAllBtn.Text ||
+                   (senderText == clearEntryBtn.Text &&
+                   this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString()
+                   == equalBtn.Text))
+                {
+                    fNum = 0;
+                    sNum = 1;
+                    this.finalLabel.Text = "";
+                    this.enterTextBox.Text = "0";
+                }
             }
             else if (senderText == clearEntryBtn.Text)
             {
                 sNum = 1;
-                this.enterTextBox.Text = "";
+                this.enterTextBox.Text = "0";
             }
             else if (senderText == removeBtn.Text && isChangedText)
             {
