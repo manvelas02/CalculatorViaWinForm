@@ -1,7 +1,7 @@
 ﻿
 namespace CalculatorViaWinForm
 {
-    partial class Form1
+    partial class CalculatorWinForm
     {
         /// <summary>
         /// Required designer variable.
@@ -315,7 +315,7 @@ namespace CalculatorViaWinForm
             this.finalLabel.TabIndex = 2;
             this.finalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // Form1
+            // CalculatorWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -323,8 +323,9 @@ namespace CalculatorViaWinForm
             this.Controls.Add(this.finalLabel);
             this.Controls.Add(this.enterTextBox);
             this.Controls.Add(this.buttonsPanel);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "CalculatorWinForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Calculator";
             this.buttonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
