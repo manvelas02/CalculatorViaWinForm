@@ -15,7 +15,6 @@ namespace CalculatorViaWinForm
         {
             InitializeComponent();
         }
-        int dotCount = 0;
         double fNum = 0;
         double sNum = 1;
         bool isChangedText = false;
@@ -59,10 +58,14 @@ namespace CalculatorViaWinForm
                 string senderText = ((Button)sender).Text;
                 if (senderText == dotBtn.Text && this.enterTextBox.Text != "Error")
                 {
-                    if (dotCount < 1)
+                    if (!isChangedText)
+                    {
+                        this.enterTextBox.Text = "0";
+                        this.enterTextBox.Text += dotBtn.Text;
+                    }
+                    if (!this.enterTextBox.Text.Contains(dotBtn.Text))
                     {
                         this.enterTextBox.Text += senderText;
-                        dotCount++;
                     }
                 }
                 else
@@ -75,24 +78,21 @@ namespace CalculatorViaWinForm
                             Clear((object)clearAllBtn, e);
                             if (senderText == dotBtn.Text)
                             {
-                                if (dotCount < 1)
+                                if (!this.enterTextBox.Text.Contains(dotBtn.Text))
                                 {
                                     this.enterTextBox.Text += senderText;
-                                    dotCount++;
                                 }
                             }
                             else
                             {
                                 this.enterTextBox.Text = senderText;
-                                dotCount = 0;
                             }
                             isOp = false;
                         }
-                        else if (IsOperation(finalLabel.Text) && isOp)
+                        else if (IsOperation(finalLabel.Text) && isOp && !isChangedText)
                         {
                             this.enterTextBox.Text = "";
                             this.enterTextBox.Text += senderText;
-                            dotCount = 0;
                             isOp = false;
                         }
                         else if (this.enterTextBox.Text == "0" || this.enterTextBox.Text == "Error")
@@ -206,9 +206,21 @@ namespace CalculatorViaWinForm
                 }
                 else
                 {
-                    this.finalLabel.Text = ChangeText(operation, this.finalLabel.Text);
-                    lastOp = op;
-                    isChangedText = false;
+                    if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
+                    {
+                        fNum = double.Parse(this.enterTextBox.Text);
+                        sNum = 1;
+                        this.finalLabel.Text = this.enterTextBox.Text + " " + operation + " ";
+                        lastOp = op;
+                        isChangedText = false;
+                    }
+                    else
+                    {
+
+                        this.finalLabel.Text = ChangeText(operation, this.finalLabel.Text);
+                        lastOp = op;
+                        isChangedText = false;
+                    }
                 }
             }
             else
@@ -260,19 +272,11 @@ namespace CalculatorViaWinForm
                     sNum = 1;
                     this.finalLabel.Text = "";
                     this.enterTextBox.Text = "0";
-                    if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                    {
-                        dotCount = 0;
-                    }
                 }
                 else if (senderText == clearEntryBtn.Text)
                 {
                     sNum = 1;
                     this.enterTextBox.Text = "0";
-                    if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                    {
-                        dotCount = 0;
-                    }
                 }
                 else if (senderText == removeBtn.Text)
                 {
@@ -291,10 +295,6 @@ namespace CalculatorViaWinForm
                         {
                             this.enterTextBox.Text = tempStr;
                         }
-                        if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                        {
-                            dotCount = 0;
-                        }
                     }
                     else
                     {
@@ -303,10 +303,6 @@ namespace CalculatorViaWinForm
                             if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
                             {
                                 this.finalLabel.Text = "";
-                                if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                                {
-                                    dotCount = 0;
-                                }
                             }
                         }
                         else
@@ -324,10 +320,6 @@ namespace CalculatorViaWinForm
                             {
                                 this.enterTextBox.Text = tempStr;
                             }
-                            if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                            {
-                                dotCount = 0;
-                            }
                         }
                     }
                 }
@@ -336,10 +328,6 @@ namespace CalculatorViaWinForm
             {
                 sNum = 1;
                 this.enterTextBox.Text = "0";
-                if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                {
-                    dotCount = 0;
-                }
             }
             else if (senderText == removeBtn.Text)
             {
@@ -358,10 +346,6 @@ namespace CalculatorViaWinForm
                     {
                         this.enterTextBox.Text = tempStr;
                     }
-                    if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                    {
-                        dotCount = 0;
-                    }
                 }  
                 else
                 {
@@ -370,10 +354,6 @@ namespace CalculatorViaWinForm
                         if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
                         {
                             this.finalLabel.Text = "";
-                            if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                            {
-                                dotCount = 0;
-                            }
                         }
                     }
                     else
@@ -390,10 +370,6 @@ namespace CalculatorViaWinForm
                         else
                         {
                             this.enterTextBox.Text = tempStr;
-                        }
-                        if (!this.enterTextBox.Text.Contains(dotBtn.Text))
-                        {
-                            dotCount = 0;
                         }
                     }
                 }
