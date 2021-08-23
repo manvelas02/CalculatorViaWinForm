@@ -19,11 +19,12 @@ namespace CalculatorViaWinForm
         double sNum = 1;
         bool isChangedText = false;
         bool isOp = false;
-        private void IsTextChage(object sender, EventArgs e)
+        List<string> historyArr = new List<string>();
+        private void IsTextChage(object button, EventArgs e)
         {
             isChangedText = true;
         }
-        private void DontTypeTextBox(object sender, KeyPressEventArgs e)
+        private void DontTypeTextBox(object button, KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -51,12 +52,12 @@ namespace CalculatorViaWinForm
             }
             return res;
         }
-        private void InputNumber(object sender, EventArgs e)
+        private void InputNumber(object button, EventArgs e)
         {
+            string buttonText = ((Button)button).Text;
             if (this.enterTextBox.Text.Length < 13)
             {
-                string senderText = ((Button)sender).Text;
-                if (senderText == dotBtn.Text && this.enterTextBox.Text != "Error")
+                if (buttonText == dotBtn.Text && this.enterTextBox.Text != "Error")
                 {
                     if (!isChangedText)
                     {
@@ -65,7 +66,7 @@ namespace CalculatorViaWinForm
                     }
                     if (!this.enterTextBox.Text.Contains(dotBtn.Text))
                     {
-                        this.enterTextBox.Text += senderText;
+                        this.enterTextBox.Text += buttonText;
                     }
                 }
                 else
@@ -76,53 +77,113 @@ namespace CalculatorViaWinForm
                         == equalBtn.Text)
                         {
                             Clear((object)clearAllBtn, e);
-                            if (senderText == dotBtn.Text)
+                            if (buttonText == dotBtn.Text)
                             {
                                 if (!this.enterTextBox.Text.Contains(dotBtn.Text))
                                 {
-                                    this.enterTextBox.Text += senderText;
+                                    this.enterTextBox.Text += buttonText;
                                 }
                             }
                             else
                             {
-                                this.enterTextBox.Text = senderText;
+                                this.enterTextBox.Text = buttonText;
                             }
                             isOp = false;
                         }
                         else if (IsOperation(finalLabel.Text) && isOp && !isChangedText)
                         {
                             this.enterTextBox.Text = "";
-                            this.enterTextBox.Text += senderText;
+                            this.enterTextBox.Text += buttonText;
                             isOp = false;
                         }
                         else if (this.enterTextBox.Text == "0" || this.enterTextBox.Text == "Error")
                         {
-                            this.enterTextBox.Text = senderText;
+                            this.enterTextBox.Text = buttonText;
                         }
                         else
                         {
-                            this.enterTextBox.Text += senderText;
+                            this.enterTextBox.Text += buttonText;
                         }
                     }
                     else if (this.enterTextBox.Text == "0" || this.enterTextBox.Text == "Error")
                     {
-                        this.enterTextBox.Text = senderText;
+                        this.enterTextBox.Text = buttonText;
                     }
                     else
                     {
-                        this.enterTextBox.Text += senderText;
+                        this.enterTextBox.Text += buttonText;
+                    }
+                }
+            }
+            else if (this.enterTextBox.Text.Length > 13 && !isChangedText)
+            {
+                if (buttonText == dotBtn.Text && this.enterTextBox.Text != "Error")
+                {
+                    if (!isChangedText)
+                    {
+                        this.enterTextBox.Text = "0";
+                        this.enterTextBox.Text += dotBtn.Text;
+                    }
+                    if (!this.enterTextBox.Text.Contains(dotBtn.Text))
+                    {
+                        this.enterTextBox.Text += buttonText;
+                    }
+                }
+                else
+                {
+                    if (!String.IsNullOrWhiteSpace(this.finalLabel.Text))
+                    {
+                        if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString()
+                        == equalBtn.Text)
+                        {
+                            Clear((object)clearAllBtn, e);
+                            if (buttonText == dotBtn.Text)
+                            {
+                                if (!this.enterTextBox.Text.Contains(dotBtn.Text))
+                                {
+                                    this.enterTextBox.Text += buttonText;
+                                }
+                            }
+                            else
+                            {
+                                this.enterTextBox.Text = buttonText;
+                            }
+                            isOp = false;
+                        }
+                        else if (IsOperation(finalLabel.Text) && isOp && !isChangedText)
+                        {
+                            this.enterTextBox.Text = "";
+                            this.enterTextBox.Text += buttonText;
+                            isOp = false;
+                        }
+                        else if (this.enterTextBox.Text == "0" || this.enterTextBox.Text == "Error")
+                        {
+                            this.enterTextBox.Text = buttonText;
+                        }
+                        else
+                        {
+                            this.enterTextBox.Text += buttonText;
+                        }
+                    }
+                    else if (this.enterTextBox.Text == "0" || this.enterTextBox.Text == "Error")
+                    {
+                        this.enterTextBox.Text = buttonText;
+                    }
+                    else
+                    {
+                        this.enterTextBox.Text += buttonText;
                     }
                 }
             }
         }
-        public string ChangeText(string senderText, string source)
+        public string ChangeText(string buttonText, string source)
         {
             string tempStr = null;
             for (int i = 0; i < source.Length - 2; i++)
             {
                 tempStr += source[i].ToString();
             }
-            tempStr += senderText + " ";
+            tempStr += buttonText + " ";
             return tempStr;
         }
         Func<double, double, string> lastOp;
@@ -148,6 +209,16 @@ namespace CalculatorViaWinForm
                         fNum = double.Parse(tempStr);
                         this.finalLabel.Text += tempStr + " " + operation + " ";
                         isChangedText = false;
+                        isOp = true;
+                    }
+                    else if (operation == inNumSecDeegreBtn.Text)
+                    {
+                        sNum = double.Parse(this.enterTextBox.Text);
+                        this.finalLabel.Text += this.enterTextBox.Text + " ^ 2 " + equalBtn.Text + " ";
+                        this.enterTextBox.Text = lastOp(sNum, sNum);
+                        fNum = double.Parse(this.enterTextBox.Text);
+                        isChangedText = false;
+                        lastOp = null;
                         isOp = true;
                     }
                     else
@@ -193,6 +264,16 @@ namespace CalculatorViaWinForm
                         isOp = true;
                         isChangedText = false;
                     }
+                    else if (operation == inNumSecDeegreBtn.Text)
+                    {
+                        sNum = double.Parse(this.enterTextBox.Text);
+                        this.finalLabel.Text += this.enterTextBox.Text + " ^ 2 " + equalBtn.Text + " ";
+                        this.enterTextBox.Text = lastOp(sNum, 2);
+                        fNum = double.Parse(this.enterTextBox.Text);
+                        lastOp = null;
+                        isChangedText = false;
+                        isOp = true;
+                    }
                     else
                     {
                         sNum = double.Parse(this.enterTextBox.Text);
@@ -206,26 +287,45 @@ namespace CalculatorViaWinForm
                 }
                 else
                 {
-                    if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
+                    if (operation != inNumSecDeegreBtn.Text)
                     {
-                        fNum = double.Parse(this.enterTextBox.Text);
-                        sNum = 1;
-                        this.finalLabel.Text = this.enterTextBox.Text + " " + operation + " ";
-                        lastOp = op;
-                        isChangedText = false;
+                        if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text)
+                        {
+                            fNum = double.Parse(this.enterTextBox.Text);
+                            sNum = 1;
+                            historyArr.Add(this.finalLabel.Text + this.enterTextBox.Text + "\n");
+                            this.finalLabel.Text = this.enterTextBox.Text + " " + operation + " ";
+                            lastOp = op;
+                            isChangedText = false;
+                        }
+                        else
+                        {
+
+                            this.finalLabel.Text = ChangeText(operation, this.finalLabel.Text);
+                            lastOp = op;
+                            isChangedText = false;
+                        }
                     }
                     else
                     {
-
-                        this.finalLabel.Text = ChangeText(operation, this.finalLabel.Text);
-                        lastOp = op;
-                        isChangedText = false;
+                        if (this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString() == equalBtn.Text && lastOp != null)
+                        {
+                            this.finalLabel.Text = "";
+                            sNum = double.Parse(this.enterTextBox.Text);
+                            this.finalLabel.Text += this.enterTextBox.Text + " ^ 2 " + equalBtn.Text + " ";
+                            this.enterTextBox.Text = lastOp(sNum, 2);
+                            fNum = double.Parse(this.enterTextBox.Text);
+                            isChangedText = false;
+                            lastOp = null;
+                            isOp = true;
+                        }
                     }
                 }
             }
             else
             {
-                this.finalLabel.Text = lastOp(fNum, sNum) + " " + operation + " ";
+
+                historyArr.Add(this.finalLabel.Text + this.enterTextBox.Text + "\n"); this.finalLabel.Text = lastOp(fNum, sNum) + " " + operation + " ";
                 this.enterTextBox.Text = lastOp(fNum, sNum);
                 fNum = double.Parse(lastOp(fNum, sNum));
                 lastOp = op;
@@ -233,38 +333,54 @@ namespace CalculatorViaWinForm
                 isChangedText = false;
             }
         }
-        private void Operations(object sender, EventArgs e)
+        private void Operations(object button, EventArgs e)
         {
-            string senderText = ((Button)sender).Text;
+            string buttonText = ((Button)button).Text;
             Calculator calculator = new Calculator();
-            if (senderText == plusBtn.Text)
+            if (buttonText == plusBtn.Text)
             {
-                Operation(senderText, calculator.Plus);
+                Operation(buttonText, calculator.Plus);
             }
-            else if (senderText == minusBtn.Text)
+            else if (buttonText == minusBtn.Text)
             {
-                Operation(senderText, calculator.Minus);
+                Operation(buttonText, calculator.Minus);
             }
-            else if (senderText == multiplyBtn.Text)
+            else if (buttonText == multiplyBtn.Text)
             {
-                Operation(senderText, calculator.Multiply);
+                Operation(buttonText, calculator.Multiply);
             }
-            else if (senderText == devideBtn.Text)
+            else if (buttonText == devideBtn.Text)
             {
-                Operation(senderText, calculator.Devide);
+                Operation(buttonText, calculator.Devide);
             }
-            else if (senderText == equalBtn.Text)
+            else if (buttonText == equalBtn.Text)
             {
-                Operation(senderText, lastOp);
+                Operation(buttonText, lastOp);
+            }
+            else if (buttonText == inNumSecDeegreBtn.Text)
+            {
+                Operation(buttonText, calculator.SecondDeegre);
+            }
+            else if (buttonText == inNumAnyDeegreBtn.Text)
+            {
+                Operation(buttonText, calculator.AnyDeegre);
+            }
+            else if (buttonText == inNumSecRootBtn.Text)
+            {
+                Operation(buttonText, calculator.SecondRoot);
+            }
+            else if (buttonText == inNumAnyRootBtn.Text)
+            {
+                Operation(buttonText, calculator.AnyRoot);
             }
         }
-        public void Clear(object sender, EventArgs e)
+        public void Clear(object button, EventArgs e)
         {
-            string senderText = ((Button)sender).Text;
+            string buttonText = ((Button)button).Text;
             if (!String.IsNullOrWhiteSpace(this.finalLabel.Text))
             {
-                if (senderText == clearAllBtn.Text ||
-                   (senderText == clearEntryBtn.Text &&
+                if (buttonText == clearAllBtn.Text ||
+                   (buttonText == clearEntryBtn.Text &&
                    this.finalLabel.Text[this.finalLabel.Text.Length - 2].ToString()
                    == equalBtn.Text))
                 {
@@ -272,13 +388,14 @@ namespace CalculatorViaWinForm
                     sNum = 1;
                     this.finalLabel.Text = "";
                     this.enterTextBox.Text = "0";
+                    lastOp = null;
                 }
-                else if (senderText == clearEntryBtn.Text)
+                else if (buttonText == clearEntryBtn.Text)
                 {
                     sNum = 1;
                     this.enterTextBox.Text = "0";
                 }
-                else if (senderText == removeBtn.Text)
+                else if (buttonText == removeBtn.Text)
                 {
                     if (isChangedText)
                     {
@@ -324,12 +441,12 @@ namespace CalculatorViaWinForm
                     }
                 }
             }
-            else if (senderText == clearEntryBtn.Text)
+            else if (buttonText == clearEntryBtn.Text)
             {
                 sNum = 1;
                 this.enterTextBox.Text = "0";
             }
-            else if (senderText == removeBtn.Text)
+            else if (buttonText == removeBtn.Text)
             {
                 if (isChangedText)
                 {
@@ -346,7 +463,7 @@ namespace CalculatorViaWinForm
                     {
                         this.enterTextBox.Text = tempStr;
                     }
-                }  
+                }
                 else
                 {
                     if (!String.IsNullOrWhiteSpace(this.finalLabel.Text))
@@ -375,6 +492,27 @@ namespace CalculatorViaWinForm
                 }
             }
         }
+
+        public void ShowHistory(object button, EventArgs e)
+        {
+            HistoryForm historyForm = new HistoryForm();
+            if (historyArr.Count <= 18)
+            {
+                for (int i = historyArr.Count - 1; i >= 0; i--)
+                {
+                    historyForm.historyLabel.Text += historyArr[i];
+                }
+            }
+            else
+            {
+                for (int i = historyArr.Count - 1; i >= historyArr.Count - 17; i--)
+                {
+                    historyForm.historyLabel.Text += historyArr[i];
+                }
+            }
+            historyForm.Show();
+        }
+
     }
     public class Calculator
     {
@@ -397,6 +535,23 @@ namespace CalculatorViaWinForm
         public string Multiply(double fNum, double sNum)
         {
             return (fNum * sNum).ToString();
+        }
+
+        public string SecondDeegre(double fNum, double sNum)
+        {
+            return Math.Pow(fNum, 2).ToString();
+        }
+        public string AnyDeegre(double fNum, double sNum)
+        {
+            return Math.Pow(fNum, sNum).ToString();
+        }
+        public string SecondRoot(double fNum, double sNum)
+        {
+            return Math.Sqrt(fNum).ToString();
+        }
+        public string AnyRoot(double fNum, double sNum)
+        {
+            return Math.Pow(fNum, 1 / sNum).ToString();
         }
     }
 }

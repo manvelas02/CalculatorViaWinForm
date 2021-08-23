@@ -51,11 +51,21 @@ namespace CalculatorViaWinForm
             this.oneBtn = new System.Windows.Forms.Button();
             this.enterTextBox = new System.Windows.Forms.TextBox();
             this.finalLabel = new System.Windows.Forms.Label();
+            this.historyBtn = new System.Windows.Forms.Button();
+            this.inNumSecDeegreBtn = new System.Windows.Forms.Button();
+            this.inNumAnyDeegreBtn = new System.Windows.Forms.Button();
+            this.inNumSecRootBtn = new System.Windows.Forms.Button();
+            this.inNumAnyRootBtn = new System.Windows.Forms.Button();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.inNumSecDeegreBtn);
+            this.buttonsPanel.Controls.Add(this.inNumAnyDeegreBtn);
+            this.buttonsPanel.Controls.Add(this.inNumSecRootBtn);
+            this.buttonsPanel.Controls.Add(this.inNumAnyRootBtn);
+            this.buttonsPanel.Controls.Add(this.historyBtn);
             this.buttonsPanel.Controls.Add(this.removeBtn);
             this.buttonsPanel.Controls.Add(this.equalBtn);
             this.buttonsPanel.Controls.Add(this.minusBtn);
@@ -76,15 +86,15 @@ namespace CalculatorViaWinForm
             this.buttonsPanel.Controls.Add(this.twoBtn);
             this.buttonsPanel.Controls.Add(this.oneBtn);
             this.buttonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonsPanel.Location = new System.Drawing.Point(0, 116);
+            this.buttonsPanel.Location = new System.Drawing.Point(0, 123);
             this.buttonsPanel.Name = "buttonsPanel";
-            this.buttonsPanel.Size = new System.Drawing.Size(371, 139);
+            this.buttonsPanel.Size = new System.Drawing.Size(518, 139);
             this.buttonsPanel.TabIndex = 0;
             // 
             // removeBtn
             // 
             this.removeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeBtn.Location = new System.Drawing.Point(296, -1);
+            this.removeBtn.Location = new System.Drawing.Point(369, 0);
             this.removeBtn.Name = "removeBtn";
             this.removeBtn.Size = new System.Drawing.Size(76, 37);
             this.removeBtn.TabIndex = 18;
@@ -95,7 +105,7 @@ namespace CalculatorViaWinForm
             // equalBtn
             // 
             this.equalBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.equalBtn.Location = new System.Drawing.Point(296, 99);
+            this.equalBtn.Location = new System.Drawing.Point(369, 101);
             this.equalBtn.Name = "equalBtn";
             this.equalBtn.Size = new System.Drawing.Size(76, 37);
             this.equalBtn.TabIndex = 17;
@@ -183,7 +193,7 @@ namespace CalculatorViaWinForm
             // clearAllBtn
             // 
             this.clearAllBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearAllBtn.Location = new System.Drawing.Point(296, 67);
+            this.clearAllBtn.Location = new System.Drawing.Point(369, 68);
             this.clearAllBtn.Name = "clearAllBtn";
             this.clearAllBtn.Size = new System.Drawing.Size(76, 37);
             this.clearAllBtn.TabIndex = 9;
@@ -198,7 +208,7 @@ namespace CalculatorViaWinForm
             this.multiplyBtn.Name = "multiplyBtn";
             this.multiplyBtn.Size = new System.Drawing.Size(76, 37);
             this.multiplyBtn.TabIndex = 8;
-            this.multiplyBtn.Text = "*";
+            this.multiplyBtn.Text = "X";
             this.multiplyBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.multiplyBtn.UseVisualStyleBackColor = true;
             this.multiplyBtn.Click += new System.EventHandler(this.Operations);
@@ -239,7 +249,7 @@ namespace CalculatorViaWinForm
             // clearEntryBtn
             // 
             this.clearEntryBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearEntryBtn.Location = new System.Drawing.Point(296, 33);
+            this.clearEntryBtn.Location = new System.Drawing.Point(369, 34);
             this.clearEntryBtn.Name = "clearEntryBtn";
             this.clearEntryBtn.Size = new System.Drawing.Size(76, 37);
             this.clearEntryBtn.TabIndex = 4;
@@ -295,10 +305,10 @@ namespace CalculatorViaWinForm
             // 
             this.enterTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.enterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enterTextBox.Location = new System.Drawing.Point(0, 54);
+            this.enterTextBox.Location = new System.Drawing.Point(0, 61);
             this.enterTextBox.Multiline = true;
             this.enterTextBox.Name = "enterTextBox";
-            this.enterTextBox.Size = new System.Drawing.Size(371, 62);
+            this.enterTextBox.Size = new System.Drawing.Size(518, 62);
             this.enterTextBox.TabIndex = 1;
             this.enterTextBox.Text = "0";
             this.enterTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -311,18 +321,72 @@ namespace CalculatorViaWinForm
             this.finalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.finalLabel.Location = new System.Drawing.Point(0, 0);
             this.finalLabel.Name = "finalLabel";
-            this.finalLabel.Size = new System.Drawing.Size(371, 54);
+            this.finalLabel.Size = new System.Drawing.Size(518, 61);
             this.finalLabel.TabIndex = 2;
             this.finalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // historyBtn
+            // 
+            this.historyBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.historyBtn.Location = new System.Drawing.Point(442, 0);
+            this.historyBtn.Name = "historyBtn";
+            this.historyBtn.Size = new System.Drawing.Size(76, 136);
+            this.historyBtn.TabIndex = 19;
+            this.historyBtn.Text = "History";
+            this.historyBtn.UseVisualStyleBackColor = true;
+            this.historyBtn.Click += new System.EventHandler(this.ShowHistory);
+            // 
+            // inNumSecDeegreBtn
+            // 
+            this.inNumSecDeegreBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inNumSecDeegreBtn.Location = new System.Drawing.Point(295, 100);
+            this.inNumSecDeegreBtn.Name = "inNumSecDeegreBtn";
+            this.inNumSecDeegreBtn.Size = new System.Drawing.Size(76, 37);
+            this.inNumSecDeegreBtn.TabIndex = 23;
+            this.inNumSecDeegreBtn.Text = "x^2";
+            this.inNumSecDeegreBtn.UseVisualStyleBackColor = true;
+            this.inNumSecDeegreBtn.Click += new System.EventHandler(this.Operations);
+            // 
+            // inNumAnyDeegreBtn
+            // 
+            this.inNumAnyDeegreBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inNumAnyDeegreBtn.Location = new System.Drawing.Point(295, 67);
+            this.inNumAnyDeegreBtn.Name = "inNumAnyDeegreBtn";
+            this.inNumAnyDeegreBtn.Size = new System.Drawing.Size(76, 37);
+            this.inNumAnyDeegreBtn.TabIndex = 22;
+            this.inNumAnyDeegreBtn.Text = "x^y";
+            this.inNumAnyDeegreBtn.UseVisualStyleBackColor = true;
+            // 
+            // inNumSecRootBtn
+            // 
+            this.inNumSecRootBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inNumSecRootBtn.Location = new System.Drawing.Point(295, 33);
+            this.inNumSecRootBtn.Name = "inNumSecRootBtn";
+            this.inNumSecRootBtn.Size = new System.Drawing.Size(76, 37);
+            this.inNumSecRootBtn.TabIndex = 21;
+            this.inNumSecRootBtn.Text = "√x";
+            this.inNumSecRootBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.inNumSecRootBtn.UseVisualStyleBackColor = true;
+            // 
+            // inNumAnyRootBtn
+            // 
+            this.inNumAnyRootBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inNumAnyRootBtn.Location = new System.Drawing.Point(295, -1);
+            this.inNumAnyRootBtn.Name = "inNumAnyRootBtn";
+            this.inNumAnyRootBtn.Size = new System.Drawing.Size(76, 37);
+            this.inNumAnyRootBtn.TabIndex = 20;
+            this.inNumAnyRootBtn.Text = "y√x";
+            this.inNumAnyRootBtn.UseVisualStyleBackColor = true;
             // 
             // CalculatorWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 255);
+            this.ClientSize = new System.Drawing.Size(518, 262);
             this.Controls.Add(this.finalLabel);
             this.Controls.Add(this.enterTextBox);
             this.Controls.Add(this.buttonsPanel);
+            this.MaximizeBox = false;
             this.Name = "CalculatorWinForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculator";
@@ -356,6 +420,11 @@ namespace CalculatorViaWinForm
         private System.Windows.Forms.TextBox enterTextBox;
         private System.Windows.Forms.Label finalLabel;
         private System.Windows.Forms.Button removeBtn;
+        private System.Windows.Forms.Button historyBtn;
+        private System.Windows.Forms.Button inNumSecDeegreBtn;
+        private System.Windows.Forms.Button inNumAnyDeegreBtn;
+        private System.Windows.Forms.Button inNumSecRootBtn;
+        private System.Windows.Forms.Button inNumAnyRootBtn;
     }
 }
 
